@@ -5,9 +5,9 @@ Assignment for Frontend Development Challenge Jan, 2025.
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.5.
 
 # Code Coverage
- Run unit test for (`add-workout-component`) and (`workout-list-component`) with 100% code coverage as visible in repective file
+ Run unit test for components (`add-workout.component.ts`) , (`workout-list.component.ts`) and 1 service(`workout.service.ts`) with 100% code coverage as visible in repective attachment
  
- ![unit-test](https://github.com/user-attachments/assets/33bbbff6-5b6c-400c-bdca-e51915cccd7e)
+![Unittest](https://github.com/user-attachments/assets/1af27637-8045-4dd4-9d72-494ea177db01)
 
 # About the project
 ## Health Challenge Tracker 🏋️‍♂️📊  
