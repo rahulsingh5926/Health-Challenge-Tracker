@@ -157,33 +157,36 @@ export class ChartBasicDemoComponent implements OnInit {
   }
 
   loadUserWorkouts() {
-    const workoutDataString = localStorage.getItem('workouts');
-    if (workoutDataString) {
-      const workoutData = JSON.parse(workoutDataString);
-      console.log('Selected: ', this.selectedUser);
-      const userWorkouts = workoutData.find((user: any) => user.userName === this.selectedUser);
-      console.log('Selected workout: ', userWorkouts);
+  const workoutDataString = localStorage.getItem('workouts');
+  if (workoutDataString) {
+    const workoutData = JSON.parse(workoutDataString);
+    console.log('Selected: ', this.selectedUser);
 
-      if (userWorkouts) {
-        const labels = userWorkouts.workoutType;
-        const data = userWorkouts.workoutDuration;
-        console.log('data', data);
-        this.basicData = {
-          labels: labels,
-          datasets: [
-            {
-              label: `Activity Time for ${this.selectedUser}`,
-              data: data,
-              backgroundColor: 'rgb(188, 61, 61)',
-              borderColor: 'rgb(195, 214, 227)',
-              borderWidth: 1,
-            },
-          ],
-        };
+    const userWorkouts = workoutData.find((user: any) => user.userName === this.selectedUser);
+    console.log('Selected workout: ', userWorkouts);
 
-        console.log('Basic: ', this.basicData);
-        this.cd.markForCheck();
-      }
+    if (userWorkouts && userWorkouts.activities) {
+      const labels = userWorkouts.activities.map((activity: any) => activity.workoutType);
+      const data = userWorkouts.activities.map((activity: any) => activity.workoutMinutes);
+      console.log('data', data);
+
+      this.basicData = {
+        labels: labels,
+        datasets: [
+          {
+            label: `Activity Time for ${this.selectedUser}`,
+            data: data,
+            backgroundColor: 'rgb(35, 203, 141)',
+            borderColor: 'rgb(245, 249, 252)',
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      console.log('Basic: ', this.basicData);
+      this.cd.markForCheck();
     }
   }
+}
+
 }
