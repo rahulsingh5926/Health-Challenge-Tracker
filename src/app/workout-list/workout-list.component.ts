@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+
+interface WorkoutActivity {
+  workoutType: string;
+  workoutMinutes: number;
+}
+
+interface UserWorkout {
+  userName: string;
+  activities: WorkoutActivity[];
+}
 
 @Component({
   selector: 'app-workout-list',
   standalone: true,
   imports: [CommonModule, FormsModule, TableModule],
   templateUrl: './workout-list.component.html',
-  styleUrls: ['./workout-list.component.css']
 })
-export class WorkoutListComponent {
-  person: any[] = [];
+export class WorkoutListComponent implements OnInit {
+  person: UserWorkout[] = [];
   searchTerm: string = '';
   selectedActivity: string = '';
   activityTypes: string[] = ['Yoga', 'Running', 'Swimming', 'Cycling'];
@@ -21,16 +30,17 @@ export class WorkoutListComponent {
   }
 
   loadWorkouts() {
-    const workoutDataString = localStorage.getItem('workouts');
+    const workoutDataString: string | null = localStorage.getItem('workouts');
     if (workoutDataString) {
-      this.person = JSON.parse(workoutDataString);
+      this.person = JSON.parse(workoutDataString) as UserWorkout[];
     }
   }
 
-  get filteredperson() {
-    return this.person.filter(person => 
+  get filteredperson(): UserWorkout[] {
+    return this.person.filter((person) =>
       person.userName.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
-      (this.selectedActivity === '' || person.activities.some((activity: any) => activity.workoutType === this.selectedActivity))
+      (this.selectedActivity === '' ||
+        person.activities.some((activity: WorkoutActivity) => activity.workoutType === this.selectedActivity))
     );
   }
 
@@ -39,7 +49,7 @@ export class WorkoutListComponent {
     localStorage.setItem('workouts', JSON.stringify(this.person));
   }
 
-  getTotalMinutes(activities: any[]) {
+  getTotalMinutes(activities: WorkoutActivity[]): number {
     return activities.reduce((total, activity) => total + activity.workoutMinutes, 0);
   }
 }
