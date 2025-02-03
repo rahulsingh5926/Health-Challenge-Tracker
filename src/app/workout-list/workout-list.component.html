@@ -1,0 +1,45 @@
+<div class="card">
+   <input type="text" [(ngModel)]="searchTerm" placeholder="Search by name" class="p-4 border rounded-lg mb-6 w-full shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition duration-200" />
+  <p-table
+    [value]="filteredCustomers"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 25%">Name</th>
+        <th style="width: 20%">Workouts</th>
+        <th style="width: 25%">Total workout Minutes</th>
+        <th style="width: 25%">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer let-customerIndex="rowIndex">
+      <tr>
+        <td>{{ customer.userName }}</td>
+        <td>
+          <ul>
+            <li
+              *ngFor="
+                let activity of customer.activities;
+                let activityIndex = index
+              "
+            >
+              {{ activity.workoutType }} - {{ activity.workoutMinutes }} min
+              <!-- <button (click)="deleteActivity(customerIndex, activityIndex)" class="ml-2 text-red-500">Delete Activity</button> -->
+            </li>
+            <!-- <strong>Total Minutes: {{ getTotalMinutes(customer.activities) }} min</strong> -->
+          </ul>
+        </td>
+
+        <td>{{ getTotalMinutes(customer.activities) }} min</td>
+        <td>
+          <button (click)="deleteCustomer(customerIndex)" class="text-red-500">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

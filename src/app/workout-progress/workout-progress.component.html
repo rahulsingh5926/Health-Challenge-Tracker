@@ -1,0 +1,8 @@
+<p-listbox
+  [options]="cities"
+  [(ngModel)]="selectedCity"
+  (onChange)="onUserSelect(selectedCity)"
+  optionLabel="name"
+  [filter]="true"
+  class="w-full md:w-56"
+/>

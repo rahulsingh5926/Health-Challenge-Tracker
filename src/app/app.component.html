@@ -1,0 +1,25 @@
+<header class="bg-white text-black py-5 px-8 shadow-md sticky top-0 z-50 border-b border-gray-200">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <h1 class="text-3xl font-extrabold tracking-wide text-blue-600">Health Challenge Tracker</h1>
+    <nav class="space-x-6 text-lg font-medium">
+      <a routerLink="/add-workout" class="hover:text-blue-500 transition duration-200">Add Workout</a>
+      <a routerLink="/workout-list" class="hover:text-blue-500 transition duration-200">Workout List</a>
+      <a routerLink="/workout-progress" class="hover:text-blue-500 transition duration-200">Workout Progress</a>
+    </nav>
+  </div>
+</header>
+
+<main class="p-6 max-w-4xl mx-auto min-h-[calc(100vh-144px)] ">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-300 py-8 px-8 mt-12 text-center shadow-inner">
+ 
+ 
+
+  <!-- Bottom Text -->
+  <div class="border-t border-gray-700 mt-6 pt-4 text-sm text-gray-400">
+    &copy; Health Challenge Tracker - Fyle Assignment.
+  </div>
+</footer>
+
