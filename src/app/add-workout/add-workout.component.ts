@@ -9,7 +9,7 @@ import { WorkoutService } from '../services/workout.service'; // Import Service
   standalone: true,
   imports: [CommonModule, FormsModule, ButtonModule],
   templateUrl: './add-workout.component.html',
-  styleUrls: ['./add-workout.component.css']
+  
 })
 export class AddWorkoutComponent {
   userName: string = '';
