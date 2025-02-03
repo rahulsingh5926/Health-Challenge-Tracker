@@ -9,7 +9,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
  
  ![unit-test](https://github.com/user-attachments/assets/33bbbff6-5b6c-400c-bdca-e51915cccd7e)
 
-#About the project
+# About the project
 ## Health Challenge Tracker 🏋️‍♂️📊  
 
 **Health Challenge Tracker** is an Angular-based web application that helps users track their workouts and visualize progress with charts.  
