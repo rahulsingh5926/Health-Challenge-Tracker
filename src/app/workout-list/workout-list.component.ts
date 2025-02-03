@@ -29,12 +29,15 @@ export class WorkoutListComponent implements OnInit {
     this.loadWorkouts();
   }
 
-  loadWorkouts() {
+loadWorkouts() {
+  if (typeof window !== 'undefined') {
     const workoutDataString: string | null = localStorage.getItem('workouts');
     if (workoutDataString) {
       this.person = JSON.parse(workoutDataString) as UserWorkout[];
     }
   }
+}
+
 
   get filteredperson(): UserWorkout[] {
     return this.person.filter((person) =>
