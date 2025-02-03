@@ -1,7 +1,18 @@
 <div class="card">
-   <input type="text" [(ngModel)]="searchTerm" placeholder="Search by name" class="p-4 border rounded-lg mb-6 w-full shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition duration-200" />
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    placeholder="Search by name"
+    class="p-4 border rounded-lg mb-6 w-full shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition duration-200"
+  />
+  
+  <select [(ngModel)]="selectedActivity" class="p-2 border rounded mb-4 w-full">
+    <option value="">All Activities</option>
+    <option *ngFor="let activity of activityTypes" [value]="activity">{{ activity }}</option>
+  </select>
+
   <p-table
-    [value]="filteredCustomers"
+    [value]="filteredperson"
     [paginator]="true"
     [rows]="5"
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -9,33 +20,27 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 25%">Name</th>
-        <th style="width: 20%">Workouts</th>
-        <th style="width: 25%">Total workout Minutes</th>
-        <th style="width: 25%">Actions</th>
+        <th style="width: 35%">Name</th>
+        <th style="width: 35%">Workouts</th>
+        <th style="width: 35%">Total workout Minutes</th>
+        <th style="width: 35%">Actions</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-customer let-customerIndex="rowIndex">
+    <ng-template pTemplate="body" let-person let-personIndex="rowIndex">
       <tr>
-        <td>{{ customer.userName }}</td>
+        <td>{{ person.userName }}</td>
         <td>
           <ul>
             <li
-              *ngFor="
-                let activity of customer.activities;
-                let activityIndex = index
-              "
+              *ngFor="let activity of person.activities"
             >
               {{ activity.workoutType }} - {{ activity.workoutMinutes }} min
-              <!-- <button (click)="deleteActivity(customerIndex, activityIndex)" class="ml-2 text-red-500">Delete Activity</button> -->
             </li>
-            <!-- <strong>Total Minutes: {{ getTotalMinutes(customer.activities) }} min</strong> -->
           </ul>
         </td>
-
-        <td>{{ getTotalMinutes(customer.activities) }} min</td>
+        <td>{{ getTotalMinutes(person.activities) }} min</td>
         <td>
-          <button (click)="deleteCustomer(customerIndex)" class="text-red-500">
+          <button (click)="deleteperson(personIndex)" class="text-red-500">
             Delete
           </button>
         </td>

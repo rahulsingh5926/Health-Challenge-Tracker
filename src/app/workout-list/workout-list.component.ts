@@ -11,8 +11,10 @@ import { TableModule } from 'primeng/table';
   styleUrls: ['./workout-list.component.css']
 })
 export class WorkoutListComponent {
-  customers: any[] = [];
+  person: any[] = [];
   searchTerm: string = '';
+  selectedActivity: string = '';
+  activityTypes: string[] = ['Yoga', 'Running', 'Swimming', 'Cycling'];
 
   ngOnInit() {
     this.loadWorkouts();
@@ -21,20 +23,23 @@ export class WorkoutListComponent {
   loadWorkouts() {
     const workoutDataString = localStorage.getItem('workouts');
     if (workoutDataString) {
-      this.customers = JSON.parse(workoutDataString);
+      this.person = JSON.parse(workoutDataString);
     }
   }
 
-  get filteredCustomers() {
-    return this.customers.filter(customer => 
-      customer.userName.toLowerCase().includes(this.searchTerm.toLowerCase())
+  get filteredperson() {
+    return this.person.filter(person => 
+      person.userName.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
+      (this.selectedActivity === '' || person.activities.some((activity: any) => activity.workoutType === this.selectedActivity))
     );
   }
-  deleteCustomer(customerIndex: number) {
-    this.customers.splice(customerIndex, 1);
-    localStorage.setItem('workouts', JSON.stringify(this.customers));
+
+  deleteperson(personIndex: number) {
+    this.person.splice(personIndex, 1);
+    localStorage.setItem('workouts', JSON.stringify(this.person));
   }
-   getTotalMinutes(activities: any[]) {
+
+  getTotalMinutes(activities: any[]) {
     return activities.reduce((total, activity) => total + activity.workoutMinutes, 0);
   }
 }
