@@ -86,36 +86,49 @@ export class ChartBasicDemoComponent implements OnInit {
     this.loadUserWorkouts();
   }
 
-  loadUserWorkouts() {
-    const workoutDataString: string | null = localStorage.getItem('workouts');
-    if (workoutDataString) {
-      const workoutData: UserWorkout[] = JSON.parse(workoutDataString);
-      console.log('Selected: ', this.selectedUser);
+loadUserWorkouts() {
+  const workoutDataString: string | null = localStorage.getItem('workouts');
+  if (workoutDataString) {
+    const workoutData: UserWorkout[] = JSON.parse(workoutDataString);
+    console.log('Selected: ', this.selectedUser);
 
-      const userWorkouts: UserWorkout | undefined = workoutData.find((user: UserWorkout) => user.userName === this.selectedUser);
-      console.log('Selected workout: ', userWorkouts);
+    const userWorkouts: UserWorkout | undefined = workoutData.find((user: UserWorkout) => user.userName === this.selectedUser);
+    console.log('Selected workout: ', userWorkouts);
 
-      if (userWorkouts && userWorkouts.activities) {
-        const labels: string[] = userWorkouts.activities.map((activity: WorkoutActivity) => activity.workoutType);
-        const data: number[] = userWorkouts.activities.map((activity: WorkoutActivity) => activity.workoutMinutes);
-        console.log('data', data);
+    if (userWorkouts && userWorkouts.activities) {
+      // Aggregate workout minutes for the same activity
+      const activityMap = userWorkouts.activities.reduce((acc, activity) => {
+        if (acc[activity.workoutType]) {
+          acc[activity.workoutType] += activity.workoutMinutes;
+        } else {
+          acc[activity.workoutType] = activity.workoutMinutes;
+        }
+        return acc;
+      }, {} as { [key: string]: number });
 
-        this.basicData = {
-          labels: labels,
-          datasets: [
-            {
-              label: `Activity Time for ${this.selectedUser}`,
-              data: data,
-              backgroundColor: 'rgb(35, 203, 141)',
-              borderColor: 'rgb(245, 249, 252)',
-              borderWidth: 1,
-            },
-          ],
-        };
+      // Prepare labels and data for the chart
+      const labels: string[] = Object.keys(activityMap);
+      const data: number[] = Object.values(activityMap);
 
-        console.log('Basic: ', this.basicData);
-        this.cd.markForCheck();
-      }
+      console.log('Aggregated data: ', data);
+
+      this.basicData = {
+        labels: labels,
+        datasets: [
+          {
+            label: `Activity Time for ${this.selectedUser} in min`,
+            data: data,
+            backgroundColor: 'rgb(35, 203, 141)',
+            borderColor: 'rgb(245, 249, 252)',
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      console.log('Basic: ', this.basicData);
+      this.cd.markForCheck();
     }
   }
+}
+
 }
